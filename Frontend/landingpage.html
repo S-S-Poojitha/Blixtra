@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Blixtra - Streamlined Access to Government Services</title>
+   <style>
+       /* General Styles */
+       * {
+           margin: 0;
+           padding: 0;
+           box-sizing: border-box;
+       }
+
+       body {
+           font-family: Arial, sans-serif;
+           display: flex;
+           flex-direction: column;
+           justify-content: flex-start;
+           align-items: center;
+           min-height: 100vh;
+           background: url('bg.webp') no-repeat center center/cover;
+           color: #fff;
+           padding-top: 60px; /* Added padding for fixed header */
+       }
+
+       /* Header */
+       .header {
+           position: fixed;
+           top: 0;
+           left: 0;
+           width: 100%;
+           display: flex;
+           justify-content: space-between;
+           align-items: center;
+           padding: 20px;
+           background: rgba(255, 255, 255, 0.8); /* Transparent white background */
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional shadow for depth */
+           border-radius: 10px; /* Rounded corners */
+           backdrop-filter: blur(10px); /* Add subtle blur effect */
+           z-index: 1000;
+       }
+
+       /* Logo */
+       .logo img {
+           width: 120px;
+           height: auto;
+           background: none; /* No background on the logo */
+       }
+
+       /* Navigation Links */
+       .nav {
+           display: flex;
+           align-items: center;
+       }
+
+       .nav a {
+           margin: 0 15px;
+           text-decoration: none;
+           color: #333; /* Dark text color for contrast */
+           font-weight: 500;
+           padding: 10px 20px;
+           background: rgba(255, 255, 255, 0.7); /* Transparent background for each link */
+           border-radius: 5px;
+           transition: background 0.3s, color 0.3s;
+       }
+
+       .nav a:hover {
+           background: #4CAF50; /* Green background on hover */
+           color: #fff; /* White text on hover */
+       }
+
+       /* Sign Up / Log In Buttons */
+       .auth-buttons {
+           display: flex;
+           gap: 10px;
+       }
+
+       .auth-buttons a {
+           padding: 10px 20px;
+           background: #4CAF50;
+           color: #fff;
+           border: none;
+           border-radius: 5px;
+           font-size: 1em;
+           font-weight: bold;
+           text-decoration: none;
+           cursor: pointer;
+           transition: background 0.3s, color 0.3s;
+       }
+
+       .auth-buttons a:hover {
+           background: #3e8e41;
+           color: #e0ffe0;
+       }
+
+       /* Section Styles */
+       .section {
+           width: 100%;
+           max-width: 1200px; /* Limit width for better alignment */
+           padding: 60px 20px;
+           text-align: center;
+           background: rgba(0, 0, 0, 0.7);
+           border-radius: 10px;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+           margin-bottom: 40px;
+           margin-top: 100px; /* Ensure content is not hidden under fixed header */
+       }
+
+       .section h2 {
+           font-size: 2.5em;
+           margin-bottom: 15px;
+           color: #4CAF50;
+       }
+
+       .section p {
+           font-size: 1.2em;
+           line-height: 1.5;
+           color: #ddd;
+           margin-bottom: 30px;
+       }
+
+       /* Feature and Support Item Styling */
+       .feature-cards, .support-cards {
+           display: flex;
+           flex-wrap: wrap;
+           gap: 20px;
+           justify-content: center;
+           margin-top: 20px;
+       }
+
+       .feature-card, .support-card {
+           background-color: #3e8e41;
+           padding: 20px;
+           border-radius: 8px;
+           width: 200px;
+           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+           color: #ddd; /* Text color */
+       }
+
+       .feature-card h3, .support-card h3 {
+           font-size: 1.2em;
+           color: #ddd; /* Accent color */
+           margin-bottom: 10px;
+       }
+
+       .feature-card p, .support-card p {
+           font-size: 0.9em;
+           line-height: 1.4;
+       }
+
+       /* CTA Button Styles */
+       .cta {
+           padding: 15px 30px;
+           background: green; /* Vibrant green color */
+           color: #fff;
+           font-size: 1.2em;
+           font-weight: bold;
+           border: none;
+           border-radius: 5px;
+           cursor: pointer;
+           transition: background 0.3s, transform 0.2s;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Slight shadow for depth */
+       }
+
+       .cta:hover {
+           background: #ddd; /* Slightly darker blue for hover effect */
+           transform: scale(1.05); /* Slightly larger on hover */
+       }
+
+       /* About Section */
+       .about {
+           width: 100%;
+           max-width: 1200px;
+           padding: 60px 20px;
+           text-align: center;
+           background: rgba(0, 0, 0, 0.7);
+           border-radius: 10px;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+           margin-top: 40px;
+           margin-bottom: 40px;
+       }
+
+       .about h2 {
+           font-size: 2.5em;
+           margin-bottom: 15px;
+           color: #4CAF50;
+       }
+
+       .about p {
+           font-size: 1.2em;
+           line-height: 1.5;
+           color: #ddd;
+       }
+
+       /* Footer Styles */
+footer {
+    background-color: #333;
+    color: #f2f2f2;
+    padding: 20px 0;
+    text-align: center;
+    font-size: 1em;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.social-media {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.social-media a {
+    color: #f2f2f2;
+    margin: 0 10px;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.social-media a:hover {
+    color: #4CAF50; /* Hover color for links */
+}
+
+.contact-info p {
+    margin: 5px 0
+}
+
+       /* Responsive Design */
+       @media (max-width: 768px) {
+           .header {
+               flex-direction: column;
+               align-items: flex-start;
+               padding: 10px;
+           }
+           .nav a {
+               margin: 5px 10px;
+           }
+           .content h1 {
+               font-size: 2.5em;
+           }
+           .content p {
+               font-size: 1em;
+           }
+           .section {
+               padding: 40px 20px;
+           }
+       }
+   </style>
+</head>
+<body>
+   <!-- Header Section -->
+   <div class="header">
+       <!-- Logo with URL -->
+       <div class="logo">
+           <img src="new logo.png" alt="Blixtra Logo">
+       </div>
+
+       <!-- Navigation Links -->
+       <div class="nav">
+           <a href="#home">Home</a>
+           <a href="#features">Features</a>
+           <a href="#support">Support</a>
+           <a href="#about">About</a>
+       </div>
+
+       <!-- Sign Up / Log In Buttons -->
+       <div class="auth-buttons">
+           <a href="signup.html">Sign Up</a>
+           <a href="login.html">Log In</a>
+       </div>
+   </div>
+
+   <!-- Home Section -->
+   <div id="home" class="section">
+       <h2>Welcome to Blixtra</h2>
+       <p>Your gateway to streamlined access to government schemes and services.</p>
+       <p>Blixtra helps you easily navigate through the complexities of government procedures, from registration to document uploads, all in one place.</p>
+       <p>Whether you need assistance with healthcare, education, or financial support, Blixtra simplifies the process for you.</p>
+       <button class="cta">Get Started</button>
+   </div>
+
+   <!-- Features Section -->
+   <div id="features" class="section">
+       <h2>Features</h2>
+       <p>Discover the features that make Blixtra the best platform for accessing government services. Our platform provides:</p>
+       
+       <div class="feature-cards">
+           <div class="feature-card">
+               <h3>Real-Time Guidance</h3>
+               <p>Step-by-step assistance through the registration and document submission process.</p>
+           </div>
+
+           <div class="feature-card">
+               <h3>Multi-Language Support</h3>
+               <p>Access Blixtra in regional languages for easy understanding.</p>
+           </div>
+
+           <div class="feature-card">
+               <h3>Secure Document Upload</h3>
+               <p>Safely upload and track documents required for various schemes.</p>
+           </div>
+
+           <div class="feature-card">
+               <h3>Instant Notifications</h3>
+               <p>Get real-time updates about your application status and government scheme announcements.</p>
+           </div>
+       </div>
+   </div>
+
+   <!-- About Section -->
+   <div id="about" class="about">
+       <h2>About Us</h2>
+       <p>Blixtra is a government services platform designed to make access to various schemes and services seamless and user-friendly. We aim to help citizens of India navigate complex government procedures with ease, offering a fully AI-powered chatbot for assistance.</p>
+       <p>Our mission is to ensure that everyone, regardless of their digital literacy, has equal access to government resources. Through technology, we hope to empower people by simplifying the processes involved in public service schemes.</p>
+   </div>
+
+   <!-- Support Section -->
+   <div id="support" class="section">
+       <h2>Support</h2>
+       <p>We are here to help! Whether you have questions or need assistance, Blixtra provides a range of support options:</p>
+       
+       <div class="support-cards">
+           <div class="support-card">
+               <h3>Live Chat</h3>
+               <p>Speak to a representative for instant help.</p>
+           </div>
+
+           <div class="support-card">
+               <h3>FAQs</h3>
+               <p>Find answers to the most common questions in our FAQ section.</p>
+           </div>
+
+           <div class="support-card">
+               <h3>Email Support</h3>
+               <p>Reach out to us via email for more detailed assistance.</p>
+           </div>
+       </div>
+       
+       <button class="cta">Contact Us</button>
+   </div>
+     <!-- Footer -->
+<footer>
+    <div class="footer-content">
+        <!-- Social Media Links -->
+        <div class="social-media">
+            <a href="#" target="_blank"><i class="fa fa-facebook"></i> Facebook</a> | 
+            <a href="#" target="_blank"><i class="fa fa-twitter"></i> Twitter</a> | 
+            <a href="#" target="_blank"><i class="fa fa-linkedin"></i> LinkedIn</a>
+        </div>
+        
+        <!-- Contact Information -->
+        <div class="contact-info">
+            <p>Email: <a href="mailto:info@Blixtra.com">info@Blixtra.com</a></p>
+            <p>Phone: <a href="tel:+1234567890">+123 456 7890</a></p>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
