@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 1200px;
+        }
+
+        /* Blue Line */
+        .blue-line {
+            width: 100%;
+            height: 4px;
+            background-color: #2575fc;
+            margin-bottom: 20px;
+        }
+
+        /* Headings */
+        h3 {
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+        }
+
+        /* Language Switcher */
+        .language-switcher {
+            margin-bottom: 20px;
+        }
+
+        .language-switcher label {
+            font-size: 14px;
+            color: #333;
+        }
+
+        .language-switcher select {
+            font-size: 14px;
+            padding: 5px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        /* Profile Section */
+        .profile-section {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+            align-items: center;
+        }
+
+        .profile-photo {
+            flex: 1;
+            text-align: center;
+        }
+
+        .profile-photo img {
+            width: 180px; /* Increased photo size */
+            height: 180px; /* Increased photo size */
+            border-radius: 50%;
+            border: 4px solid #2575fc;
+            margin-bottom: 10px;
+        }
+
+        /* Profile Details Section */
+        .profile-details {
+            flex: 2;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .profile-item {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 8px 12px;
+        }
+
+        .profile-item label {
+            font-size: 13px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .profile-item span {
+            font-size: 14px;
+            color: #333;
+        }
+
+        /* Uploaded Documents Section */
+        .uploaded-documents h3 {
+            border-top: 4px solid #2575fc;
+            padding-top: 15px;
+            color: #333;
+            font-size: 1.4em;
+        }
+
+        /* Document Table */
+        .document-table {
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .document-table th, .document-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .document-table th {
+            background-color: #f1f1f1;
+        }
+
+        /* Buttons */
+        button {
+            padding: 8px 12px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            color: black;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        button.view {
+            background-color: #007bff;
+        }
+
+        button.view:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        button.delete {
+            background-color: #dc3545;
+        }
+
+        button.delete:hover {
+            background-color: #c82333;
+            transform: scale(1.05);
+        }
+
+        /* Status Button */
+        .status-button {
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+        }
+
+        .pending-approval {
+            background-color: #ffc107;
+            color: black;
+        }
+
+        .approved {
+            background-color: #28a745;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+
+  <div class="container">
+      <!-- Language Switcher -->
+      <div class="language-switcher">
+          <label for="language">Language:</label>
+          <select id="language">
+              <option value="en">English</option>
+              <option value="hi">Hindi</option>
+              <option value="te">Telugu</option>
+              <option value="or">Odia</option>
+              <option value="bn">Bengali</option>
+          </select>
+      </div>
+  
+      <!-- Blue Line above User Profile -->
+      <div class="blue-line"></div>
+  
+      <!-- User Profile Section -->
+      <h3>User Profile</h3>
+      <div class="profile-section">
+          <!-- Profile Photo Section -->
+          <div class="profile-photo">
+              <img src="1.jpg" alt="Profile Picture">
+          </div>
+  
+          <!-- Profile Details Section -->
+          <div class="profile-details">
+              <div class="profile-item">
+                  <label>First Name:</label>
+                  <span>Tarakanta</span>
+              </div>
+              <div class="profile-item">
+                  <label>Last Name:</label>
+                  <span>Acharya</span>
+              </div>
+              <div class="profile-item">
+                  <label>Gender:</label>
+                  <span>Male</span>
+              </div>
+              <div class="profile-item">
+                  <label>Date of Birth:</label>
+                  <span>19/12/2003</span>
+              </div>
+              <div class="profile-item">
+                  <label>Phone Number:</label>
+                  <span>9876543210</span>
+              </div>
+              <div class="profile-item">
+                  <label>Email:</label>
+                  <span>acharyatarakanta2003@gmail.com</span>
+              </div>
+              <div class="profile-item">
+                  <label>Username:</label>
+                  <span>tarak123</span>
+              </div>
+              <div class="profile-item">
+                  <label>PAN:</label>
+                  <span>XXXXX 1234F</span>
+              </div>
+              <div class="profile-item">
+                  <label>Aadhar:</label>
+                  <span>XXXX XXXX 9012</span>
+              </div>
+          </div>
+      </div>
+  
+      <!-- Uploaded Documents Section -->
+      <div class="uploaded-documents">
+          <h3>Uploaded Documents</h3>
+          <table class="document-table">
+              <thead>
+                  <tr>
+                      <th>Document</th>
+                      <th>Date</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <!-- Income Certificate -->
+                  <tr>
+                      <td><strong>Income Certificate</strong></td>
+                      <td>01/12/2024</td>
+                      <td><button class="status-button pending-approval"><b>Pending Approval</b></button></td>
+                      <td>
+                          <button class="view">View</button>
+                          <button class="delete">Delete</button>
+                      </td>
+                  </tr>
+                  <!-- Identity Proof -->
+                  <tr>
+                      <td><strong>Identity Proof</strong></td>
+                      <td>01/12/2024</td>
+                      <td><button class="status-button approved"><b>Approved</b></button></td>
+                      <td>
+                          <button class="view">View</button>
+                          <button class="delete">Delete</button>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+  </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  const translations = {
+    en: {
+        language: "Language:",
+        firstName: "First Name:",
+        lastName: "Last Name:",
+        gender: "Gender:",
+        dob: "Date of Birth:",
+        phone: "Phone Number:",
+        email: "Email:",
+        username: "Username:",
+        pan: "PAN:",
+        aadhar: "Aadhar:",
+        userProfile: "User Profile",
+        uploadedDocuments: "Uploaded Documents",
+        document: "Document",
+        date: "Date",
+        status: "Status",
+        action: "Action",
+        view: "View",
+        delete: "Delete",
+        pendingApproval: "Pending Approval",
+        approved: "Approved",
+    },
+    hi: {
+        language: "भाषा:",
+        firstName: "पहला नाम:",
+        lastName: "अंतिम नाम:",
+        gender: "लिंग:",
+        dob: "जन्मतिथि:",
+        phone: "फोन नंबर:",
+        email: "ईमेल:",
+        username: "उपयोगकर्ता नाम:",
+        pan: "पैन:",
+        aadhar: "आधार:",
+        userProfile: "उपयोगकर्ता प्रोफ़ाइल",
+        uploadedDocuments: "अपलोड किए गए दस्तावेज़",
+        document: "दस्तावेज़",
+        date: "तारीख",
+        status: "स्थिति",
+        action: "क्रिया",
+        view: "देखें",
+        delete: "हटाएं",
+        pendingApproval: "अनुमोदन की प्रतीक्षा",
+        approved: "मंजूर",
+    },
+    te: {
+        language: "భాష:",
+        firstName: "మొదటి పేరు:",
+        lastName: "చివరి పేరు:",
+        gender: "లింగం:",
+        dob: "పుట్టిన తేది:",
+        phone: "ఫోన్ నంబర్:",
+        email: "ఇమెయిల్:",
+        username: "ఉపయోగరిపేరు:",
+        pan: "పాన్:",
+        aadhar: "ఆధార్:",
+        userProfile: "వాడుకరి ప్రొఫైల్",
+        uploadedDocuments: "అప్లోడ్ చేసిన పత్రాలు",
+        document: "పత్రం",
+        date: "తేదీ",
+        status: "స్థితి",
+        action: "చర్య",
+        view: "పరిశీలించు",
+        delete: "తొలగించు",
+        pendingApproval: "ఆమోదం కోసం పెండింగ్",
+        approved: "ఆమోదించబడింది",
+    },
+    or: {
+        language: "ଭାଷା:",
+        firstName: "ପ୍ରଥମ ନାମ:",
+        lastName: "ଶେଷ ନାମ:",
+        gender: "ଲିଙ୍ଗ:",
+        dob: "ଜନ୍ମ ତାରିଖ:",
+        phone: "ଫୋନ୍ ନମ୍ବର:",
+        email: "ଇମେଲ୍:",
+        username: "ଉପଯୋଗକର୍ତ୍ତା ନାମ:",
+        pan: "ପାନ୍:",
+        aadhar: "ଆଧାର:",
+        userProfile: "ବ୍ୟବହାରକାରୀ ପ୍ରୋଫାଇଲ୍",
+        uploadedDocuments: "ଅପଲୋଡ୍ କିଆଯାଇଥିବା ଡକ୍ୟୁମେଣ୍ଟ୍",
+        document: "ଡକ୍ୟୁମେଣ୍ଟ୍",
+        date: "ତାରିଖ",
+        status: "ସ୍ଥିତି",
+        action: "କାର୍ୟ",
+        view: "ଦେଖନ୍ତୁ",
+        delete: "ମିଟାନ୍ତୁ",
+        pendingApproval: "ମଞ୍ଜୁରୀ ପାଇଁ ପ୍ରତୀକ୍ଷା",
+        approved: "ମଞ୍ଜୁରୀତ",
+    },
+    bn: {
+        language: "ভাষা:",
+        firstName: "প্রথম নাম:",
+        lastName: "শেষ নাম:",
+        gender: "লিঙ্গ:",
+        dob: "জন্ম তারিখ:",
+        phone: "ফোন নম্বর:",
+        email: "ইমেইল:",
+        username: "ব্যবহারকারী নাম:",
+        pan: "প্যান:",
+        aadhar: "আধার:",
+        userProfile: "ব্যবহারকারী প্রোফাইল",
+        uploadedDocuments: "আপলোড করা ডকুমেন্ট",
+        document: "ডকুমেন্ট",
+        date: "তারিখ",
+        status: "স্টেটাস",
+        action: "অ্যাকশন",
+        view: "দেখুন",
+        delete: "মুছে ফেলুন",
+        pendingApproval: "অনুমোদনের জন্য অপেক্ষমাণ",
+        approved: "অনুমোদিত",
+    }
+};
+
+document.getElementById('language').addEventListener('change', function () {
+    const lang = this.value;
+    const translate = translations[lang];
+
+    // Language Labels
+    document.querySelector('label[for="language"]').textContent = translate.language;
+
+    // User Profile Labels
+    document.querySelector('h3').textContent = translate.userProfile;
+    const profileItems = document.querySelectorAll('.profile-item label');
+    profileItems[0].textContent = translate.firstName;
+    profileItems[1].textContent = translate.lastName;
+    profileItems[2].textContent = translate.gender;
+    profileItems[3].textContent = translate.dob;
+    profileItems[4].textContent = translate.phone;
+    profileItems[5].textContent = translate.email;
+    profileItems[6].textContent = translate.username;
+    profileItems[7].textContent = translate.pan;
+    profileItems[8].textContent = translate.aadhar;
+
+    // Uploaded Documents Section Labels
+    document.querySelector('.uploaded-documents h3').textContent = translate.uploadedDocuments;
+    document.querySelector('th:nth-child(1)').textContent = translate.document;
+    document.querySelector('th:nth-child(2)').textContent = translate.date;
+    document.querySelector('th:nth-child(3)').textContent = translate.status;
+    document.querySelector('th:nth-child(4)').textContent = translate.action;
+    
+    // Buttons and Status
+    document.querySelectorAll('.status-button.pending-approval').forEach(button => button.textContent = translate.pendingApproval);
+    document.querySelectorAll('.status-button.approved').forEach(button => button.textContent = translate.approved);
+    document.querySelectorAll('.view').forEach(button => button.textContent = translate.view);
+    document.querySelectorAll('.delete').forEach(button => button.textContent = translate.delete);
+});
+</script>
+<!-- Start of ChatBot (www.chatbot.com) code -->
+<script>
+    window.__ow = window.__ow || {};
+    window.__ow.organizationId = "84ff2e34-d179-40f4-a88c-5156d1922526";
+    window.__ow.template_id = "08b2d894-4e1c-465b-a7cf-b0d89bef122e";
+    window.__ow.integration_name = "manual_settings";
+    window.__ow.product_name = "chatbot";   
+    ;(function(n,t,c){
+        function i(n){
+            return e._h?e._h.apply(null,n):e._q.push(n)
+        }
+        var e={
+            _q:[],
+            _h:null,
+            _v:"2.0",
+            on:function(){i(["on",c.call(arguments)])},
+            once:function(){i(["once",c.call(arguments)])},
+            off:function(){i(["off",c.call(arguments)])},
+            get:function(){
+                if(!e._h)throw new Error("[OpenWidget] You can't use getters before load.");
+                return i(["get",c.call(arguments)])
+            },
+            call:function(){i(["call",c.call(arguments)])},
+            init:function(){
+                var n=t.createElement("script");
+                n.async=!0,n.type="text/javascript",n.src="https://cdn.openwidget.com/openwidget.js",t.head.appendChild(n)
+            }
+        };
+        !n.__ow.asyncInit&&e.init(),n.OpenWidget=n.OpenWidget||e
+    }(window,document,[].slice))
+  </script>
+  <noscript>You need to <a href="https://www.chatbot.com/help/chat-widget/enable-javascript-in-your-browser/" rel="noopener nofollow">enable JavaScript</a> in order to use the AI chatbot tool powered by <a href="https://www.chatbot.com/" rel="noopener nofollow" target="_blank">ChatBot</a></noscript>
+  <!-- End of ChatBot code -->
+</body>
+</html>
