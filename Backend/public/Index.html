@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <title>Multi-Step Registration Form</title>
+    <style>
+        /* Custom Styles */
+        body {
+            background-color: #f4f8f7;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 0;
+        }
+        .card {
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            flex-direction: row;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .card-img-left {
+            width: 50%;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+        }
+        .form-container {
+            width: 50%;
+            padding: 40px;
+        }
+        .form-container h1 {
+            font-weight: bold;
+            color: #000000;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .input-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .input-container input, .input-container select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-left: 10px;
+        }
+        .btn-primary {
+            background-color: #1185f2;
+            border-color: #4CAF50;
+            border-radius: 5px;
+        }
+        .btn-primary:hover {
+            background-color: #45a049;
+            border-color: #45a049;
+        }
+        .form-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .form-btn {
+            padding: 10px 20px;
+            border: none;
+        }
+        .form-footer .btn-primary {
+            border-radius: 5px;
+        }
+        .form-footer .btn-next {
+            margin-left: auto;
+        }
+        .form-footer .btn-prev {
+            margin-right: auto;
+        }
+        .redirect-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .redirect-link a {
+            color: #10a1df;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .redirect-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container py-5">
+    <div class="card">
+        <!-- Left side image -->
+        <div class="card-img-left">
+            <img src="./images/young.jpg" alt="Image" class="img-fluid">
+        </div>
+
+        <!-- Right side form -->
+        <div class="form-container">
+            <h1>Registration Form</h1>
+            <form action="/submit" method="POST" enctype="multipart/form-data">
+
+                <!-- Step 1: Personal Information -->
+                <div id="step1">
+                    <div class="input-container">
+                        <i class="fas fa-user"></i>
+                        <input type="text" name="username" class="form-control" placeholder="Username" required>
+                    </div>
+                    <div class="input-container">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" name="email" class="form-control" placeholder="Email" required>
+                    </div>
+                    <div class="input-container">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" name="password" class="form-control" placeholder="Password" required>
+                    </div>
+                </div>
+
+                <!-- Step 2: Aadhar & Personal Details -->
+                <div id="step2" style="display:none;">
+                    <div class="input-container">
+                        <i class="fas fa-id-card"></i>
+                        <input type="text" name="aadhar" class="form-control" placeholder="Aadhar Number" required maxlength="12" pattern="\d{12}" title="Aadhar card number must be 12 digits">
+                    </div>
+                    <div class="input-container">
+                        <i class="fas fa-calendar-alt"></i>
+                        <input type="number" name="age" class="form-control" placeholder="Age" required min="18">
+                    </div>
+                    <div class="input-container">
+                        <label class="form-label">Gender:</label>
+                        <select name="gender" class="form-control" required>
+                            <option value="">Select</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="input-container">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <input type="text" name="state" class="form-control" placeholder="State" required>
+                    </div>
+                </div>
+
+                <!-- Step 3: Caste Information -->
+                <div id="step3" style="display:none;">
+                    <div class="input-container">
+                        <label for="caste" class="form-label">Caste:</label>
+                        <input type="text" name="caste" class="form-control" placeholder="Caste" required>
+                    </div>
+                    <div class="input-container">
+                        <label for="caste_cert" class="form-label">Caste Certificate (PDF/Image):</label>
+                        <input type="file" id="caste_cert" name="caste_cert" class="file-input" accept="image/*, .pdf" required>
+                    </div>
+                </div>
+
+                <!-- Step 4: Income Information -->
+                <div id="step4" style="display:none;">
+                    <div class="input-container">
+                        <label for="income" class="form-label">Annual Income:</label>
+                        <input type="number" name="income" class="form-control" placeholder="Income" required min="0">
+                    </div>
+                    <div class="input-container">
+                        <label for="income_cert" class="form-label">Income Certificate (PDF/Image):</label>
+                        <input type="file" id="income_cert" name="income_cert" class="file-input" accept="image/*, .pdf" required>
+                    </div>
+                </div>
+
+                <!-- Form Footer: Submit and Next/Previous buttons -->
+                <div class="form-footer">
+                    <button type="button" class="btn btn-primary form-btn btn-prev" id="prevBtn" style="display:none;">Previous</button>
+                    <button type="button" class="btn btn-primary form-btn btn-next" id="nextBtn">Next</button>
+                    <button type="submit" class="btn btn-primary form-btn" id="submitBtn" style="display:none;">Submit</button>
+                </div>
+                <input type="submit" value="Submit">
+            </form>
+
+            <!-- Redirect to Sign In Link -->
+            <div class="redirect-link">
+                <p>Already have an account? <a href="./login.html">Sign in here</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS, Popper.js, jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy6r7K1TtC5zF1tnQx2Ym7V8r+7fwFf/cQv7B5C8" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+<script>
+    let currentStep = 1;
+    const totalSteps = 4;
+
+    // Show the current step
+    function showStep(step) {
+        for (let i = 1; i <= totalSteps; i++) {
+            const stepElement = document.getElementById('step' + i);
+            if (i === step) {
+                stepElement.style.display = 'block';
+            } else {
+                stepElement.style.display = 'none';
+            }
+        }
+
+        // Show or hide next/prev buttons and submit button
+        document.getElementById('prevBtn').style.display = (step === 1) ? 'none' : 'inline-block';
+        document.getElementById('nextBtn').style.display = (step === totalSteps) ? 'none' : 'inline-block';
+        document.getElementById('submitBtn').style.display = (step === totalSteps) ? 'inline-block' : 'none';
+    }
+
+    // Move to next step
+    document.getElementById('nextBtn').addEventListener('click', function() {
+        if (currentStep < totalSteps) {
+            currentStep++;
+            showStep(currentStep);
+        }
+    });
+
+    // Move to previous step
+    document.getElementById('prevBtn').addEventListener('click', function() {
+        if (currentStep > 1) {
+            currentStep--;
+            showStep(currentStep);
+        }
+    });
+
+    // Initial step visibility
+    showStep(currentStep);
+</script>
+
+</body>
+</html>
