@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Government Schemes</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+/* General Navbar Styles */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #333;
+  color: white;
+  position: relative;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: white;
+  margin: 0 0.5rem;
+}
+
+.navbar a:hover {
+  color: #59c8e1;
+}
+
+/* Dropdown Container */
+.navbar .dropdown {
+  position: relative;
+}
+
+/* Dropdown Toggle Button */
+.dropdown-toggle {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background-color: #59e186;
+  border: none;
+  border-radius: 5px;
+  color: black;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-toggle:hover {
+  background-color: #555;
+}
+
+/* Dropdown Menu Styles */
+.dropdown-menu {
+  display: none; /* Initially hidden */
+  position: absolute;
+  top: 100%; /* Align below the dropdown toggle */
+  right: 0;
+  margin-top: 0.5rem;
+  min-width: 200px;
+  background-color: rgb(0, 0, 0);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1050;
+  padding: 0.5rem 0;
+  list-style: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.dropdown-menu.show {
+  display: block; /* Display when active */
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Dropdown Items */
+.dropdown-item {
+  padding: 0.5rem 1rem;
+  font-size: 16px;
+  color: #000000;
+  text-decoration: none;
+  display: block;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dropdown-item:hover {
+  /* background-color: #59c8e1; */
+  color: rgb(255, 255, 255);
+}
+
+/* Additional Utility Styles */
+.navbar .profile-icon {
+  margin-left: 1rem;
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #59c8e1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 18px;
+}
+
+.navbar .profile-icon:hover {
+  background-color: #444;
+}
+
+  </style>
+</head>
+<nav class="navbar navbar-light" style="background-color: #59e186; width: 100%; padding: 10px 20px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+  <div class="container-fluid">
+    <a class="navbar-brand d-flex align-items-center" href="#" style="font-weight: bold; color: #fff;">
+      <img src="/docs/5.0/assets/brand/bootstrap-logo.svg" alt="Logo" width="30" height="24" class="me-2">
+      <span>Brand Name</span>
+    </a>
+    <div class="dropdown" style="position: absolute; right: 40px;">
+      <div class="d-flex align-items-center dropdown-toggle" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;">
+        <img src="profile-pic.jpg" alt="Profile Pic" width="35" height="35" class="rounded-circle border border-light me-2">
+        <p class="mb-0" style="color: #fff; font-size: 16px;"id="usernameDisplayText"><span id="username"></span></p>
+      </div>
+      <ul class="dropdown-menu dropdown-menu-end animate__animated animate__fadeIn" aria-labelledby="profileDropdown">
+        <li><a class="dropdown-item" href="./dashboard.html">Update Profile</a></li>
+        <li><a class="dropdown-item" href="#">Sign Out</a></li>
+        <li><a class="dropdown-item text-danger" href="#" onclick="deleteAccount()">Delete Account</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<body class="bg-light">
+  <div class="container py-5">
+    <h1 class="text-center mb-4">Government Schemes</h1>
+    <div class="filter-container d-flex justify-content-between align-items-center flex-wrap">
+      <!-- Category Filter -->
+      <select id="categoryFilter" class="form-select w-25 mb-2">
+        <option value="all">All Categories</option>
+        <option value="agriculture">Agriculture</option>
+        <option value="education">Education</option>
+        <option value="health">Health</option>
+        <option value="employment">Employment</option>
+        <option value="housing">Housing</option>
+        <option value="women">Women Empowerment</option>
+        <option value="pension">Senior Citizen</option>
+        <option value="digital">Digital India</option>
+        <option value="welfare">Welfare</option>
+      </select>
+
+      <!-- Beneficiary Filter -->
+      <select id="beneficiaryFilter" class="form-select w-25 mb-2">
+        <option value="all">All Beneficiaries</option>
+        <option value="farmer">Farmers</option>
+        <option value="student">Students</option>
+        <option value="women">Women</option>
+        <option value="general">General</option>
+        <option value="senior">Senior Citizens</option>
+      </select>
+
+      <!-- Search Box -->
+      <input type="text" id="searchBox" class="form-control w-50 mb-2" placeholder="Search by title or description">
+    </div>
+
+    <div id="schemesContainer" class="row g-4">
+      <!-- Schemes will be dynamically injected here -->
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const profileDropdown = document.getElementById("profileDropdown");
+    const dropdownMenu = profileDropdown.nextElementSibling;
+
+    profileDropdown.addEventListener("click", (e) => {
+      e.preventDefault();
+      dropdownMenu.classList.toggle("show");
+    });
+
+    // Hide dropdown when clicking outside
+    document.addEventListener("click", (e) => {
+      if (!profileDropdown.contains(e.target) && !dropdownMenu.contains(e.target)) {
+        dropdownMenu.classList.remove("show");
+      }
+    });
+  });
+    const schemes = [{
+      id: 1,
+      title: "PM Kisan Samman Nidhi",
+      category: "agriculture",
+      description: "Direct income support of ₹6,000 per year to farmer families in three equal installments.",
+      state: "ALL",
+      beneficiaries: ["farmer"],
+      status: "active",
+      website: "https://pmkisan.gov.in",
+      eligibility: "All land-holding farmers' families",
+      benefits: "₹6,000 annual financial benefit",
+      documents: ["Aadhaar Card", "Land Records", "Bank Account"]
+    },
+    {
+      id: 2,
+      title: "Pradhan Mantri Fasal Bima Yojana",
+      category: "agriculture",
+      description: "Comprehensive crop insurance scheme for farmer's financial security.",
+      state: "ALL",
+      beneficiaries: ["farmer"],
+      status: "active",
+      website: "https://pmfby.gov.in",
+      eligibility: "All farmers including sharecroppers",
+      benefits: "Crop insurance coverage",
+      documents: ["Land Records", "Bank Account", "Aadhaar Card"]
+    },
+    {
+      id: 3,
+      title: "Kisan Credit Card",
+      category: "agriculture",
+      description: "Provides farmers with timely access to credit.",
+      state: "ALL",
+      beneficiaries: ["farmer"],
+      status: "active",
+      website: "https://www.nabard.org",
+      eligibility: "All farmers, tenants, and sharecroppers",
+      benefits: "Easy credit access up to ₹3 lakhs",
+      documents: ["Land Records", "Photo ID", "Bank Account"]
+    },
+    {
+      id: 4,
+      title: "PM Krishi Sinchai Yojana",
+      category: "agriculture",
+      description: "Ensures access to irrigation for all agricultural land.",
+      state: "ALL",
+      beneficiaries: ["farmer"],
+      status: "active",
+      website: "https://pmksy.gov.in",
+      eligibility: "All farmers",
+      benefits: "Improved irrigation facilities",
+      documents: ["Land Documents", "Aadhaar Card"]
+    },
+  
+    // Education Schemes
+    {
+      id: 5,
+      title: "National Scholarship Portal",
+      category: "education",
+      description: "Single-window system for scholarship schemes across ministries.",
+      state: "ALL",
+      beneficiaries: ["student"],
+      status: "active",
+      website: "https://scholarships.gov.in",
+      eligibility: "Students from minority communities",
+      benefits: "Various scholarship amounts",
+      documents: ["Academic Records", "Income Certificate"]
+    },
+    {
+      id: 6,
+      title: "PM Poshan",
+      category: "education",
+      description: "Mid-day meal scheme for school children.",
+      state: "ALL",
+      beneficiaries: ["student"],
+      status: "active",
+      website: "https://mdm.gov.in",
+      eligibility: "School children up to class VIII",
+      benefits: "Nutritious meals during school days",
+      documents: ["School Enrollment Proof"]
+    },
+    {
+      id: 7,
+      title: "Beti Bachao Beti Padhao",
+      category: "education",
+      description: "Ensures education and protection of the girl child.",
+      state: "ALL",
+      beneficiaries: ["student", "women"],
+      status: "active",
+      website: "https://wcd.nic.in",
+      eligibility: "Girl children",
+      benefits: "Educational support and awareness",
+      documents: ["Birth Certificate", "School Enrollment"]
+    },
+    {
+      id: 8,
+      title: "PM Vidya",
+      category: "education",
+      description: "Digital education initiative for students.",
+      state: "ALL",
+      beneficiaries: ["student"],
+      status: "active",
+      website: "https://education.gov.in",
+      eligibility: "All students",
+      benefits: "Digital learning resources",
+      documents: ["School ID", "Aadhaar Card"]
+    },
+  
+    // Health Schemes
+    {
+      id: 9,
+      title: "Ayushman Bharat",
+      category: "health",
+      description: "Health insurance coverage up to ₹5 lakhs per family per year.",
+      state: "ALL",
+      beneficiaries: ["general"],
+      status: "active",
+      website: "https://pmjay.gov.in",
+      eligibility: "Poor and vulnerable families",
+      benefits: "Health coverage up to ₹5 lakhs",
+      documents: ["Aadhaar Card", "Income Certificate"]
+    },
+    {
+      id: 10,
+      title: "PM Jan Arogya Yojana",
+      category: "health",
+      description: "Cashless access to healthcare services.",
+      state: "ALL",
+      beneficiaries: ["general"],
+      status: "active",
+      website: "https://pmjay.gov.in",
+      eligibility: "SECC database families",
+      benefits: "Cashless treatment",
+      documents: ["Aadhaar Card", "PMJAY Card"]
+    },
+    {
+      id: 11,
+      title: "Janani Suraksha Yojana",
+      category: "health",
+      description: "Safe motherhood intervention for pregnant women.",
+      state: "ALL",
+      beneficiaries: ["women"],
+      status: "active",
+      website: "https://nhm.gov.in",
+      eligibility: "Pregnant women from poor families",
+      benefits: "Financial assistance for delivery",
+      documents: ["Pregnancy Card", "Aadhaar Card"]
+    },
+    
+    // Employment Schemes
+    {
+      id: 12,
+      title: "PM Kaushal Vikas Yojana",
+      category: "employment",
+      description: "Skill development training program for youth.",
+      state: "ALL",
+      beneficiaries: ["student"],
+      status: "active",
+      website: "https://pmkvyofficial.org",
+      eligibility: "Youth aged 15-45 years",
+      benefits: "Free skill training",
+      documents: ["Age Proof", "Educational Certificates"]
+    },
+    {
+      id: 13,
+      title: "Deen Dayal Upadhyaya Grameen Kaushalya Yojana",
+      category: "employment",
+      description: "Skill training program for rural youth.",
+      state: "ALL",
+      beneficiaries: ["general"],
+      status: "active",
+      website: "https://ddugky.gov.in",
+      eligibility: "Rural youth aged 15-35 years",
+      benefits: "Skill training and placement",
+      documents: ["Rural Residency Proof", "Age Proof"]
+    },
+    
+    // Housing Schemes
+    {
+      id: 14,
+      title: "PM Awas Yojana - Urban",
+      category: "housing",
+      description: "Housing for All in urban areas.",
+      state: "ALL",
+      beneficiaries: ["general"],
+      status: "active",
+      website: "https://pmaymis.gov.in",
+      eligibility: "Urban poor families",
+      benefits: "Housing assistance up to ₹2.67 lakhs",
+      documents: ["Income Certificate", "Residence Proof"]
+    },
+    {
+      id: 15,
+      title: "PM Awas Yojana - Rural",
+      category: "housing",
+      description: "Housing for All in rural areas.",
+      state: "ALL",
+      beneficiaries: ["general"],
+      status: "active",
+      website: "https://pmayg.nic.in",
+      eligibility: "Rural households",
+      benefits: "Housing assistance",
+      documents: ["BPL Card", "Land Documents"]
+    },
+  
+    // Women Empowerment Schemes
+    {
+      id: 16,
+      title: "Mahila Shakti Kendra",
+      category: "women",
+      description: "Empowerment of rural women through community participation.",
+      state: "ALL",
+      beneficiaries: ["women"],
+      status: "active",
+      website: "https://wcd.nic.in",
+      eligibility: "Rural women",
+      benefits: "Skill development and support services",
+      documents: ["Aadhaar Card", "Residence Proof"]
+    },
+    {
+      id: 17,
+      title: "Working Women Hostel",
+      category: "women",
+      description: "Safe and affordable accommodation for working women.",
+      state: "ALL",
+      beneficiaries: ["women"],
+      status: "active",
+      website: "https://wcd.nic.in",
+      eligibility: "Working women",
+      benefits: "Affordable accommodation",
+      documents: ["Employment Proof", "ID Proof"]
+    },
+  
+    // Senior Citizen Schemes
+    {
+      id: 18,
+      title: "National Pension Scheme",
+      category: "pension",
+      description: "Pension scheme for elderly citizens.",
+      state: "ALL",
+      beneficiaries: ["senior"],
+      status: "active",
+      website: "https://npscra.nsdl.co.in",
+      eligibility: "Citizens aged 60 and above",
+      benefits: "Monthly pension",
+      documents: ["Age Proof", "Bank Account"]
+    },
+    {
+      id: 19,
+      title: "Pradhan Mantri Vaya Vandana Yojana",
+      category: "pension",
+      description: "Pension scheme with guaranteed returns for senior citizens.",
+      state: "ALL",
+      beneficiaries: ["senior"],
+      status: "active",
+      website: "https://licindia.in",
+      eligibility: "Senior citizens aged 60 and above",
+      benefits: "Guaranteed pension for 10 years",
+      documents: ["Age Proof", "Address Proof"]
+    },
+  
+    // Digital India Initiatives
+    {
+      id: 20,
+      title: "Digital India",
+      category: "digital",
+      description: "Digital empowerment of citizens.",
+      state: "ALL",
+      beneficiaries: ["general"],
+      status: "active",
+      website: "https://digitalindia.gov.in",
+      eligibility: "All citizens",
+      benefits: "Digital literacy and services",
+      documents: ["Aadhaar Card"]
+    },
+  
+    // ... Adding more schemes following the same pattern up to 50 ...
+    // Welfare Schemes
+    {
+      id: 21,
+      title: "Antyodaya Anna Yojana",
+      category: "welfare",
+      description: "Food security for poorest of poor families.",
+      state: "ALL",
+      beneficiaries: ["general"],
+      status: "active",
+      website: "https://nfsa.gov.in",
+      eligibility: "BPL families",
+      benefits: "Subsidized food grains",
+      documents: ["BPL Card", "Aadhaar Card"]
+    },
+    
+    {
+      id: 22,
+      title: "Sukanya Samriddhi Yojana",
+      category: "welfare",
+      description: "Savings scheme for girl child education and marriage expenses.",
+      state: "ALL",
+      beneficiaries: ["women"],
+      status: "active",
+      website: "https://indiapost.gov.in",
+      eligibility: "Girls below 10 years",
+      benefits: "High interest rate savings scheme",
+      documents: ["Birth Certificate", "Guardian ID"]
+    },
+  
+    // Additional schemes in various categories...
+    {
+      id: 23,
+      title: "PM Ujjwala Yojana",
+      category: "welfare",
+      description: "Free LPG connections to BPL households.",
+      state: "ALL",
+      beneficiaries: ["general"],
+      status: "active",
+      website: "https://pmuy.gov.in",
+      eligibility: "BPL women",
+      benefits: "Free LPG connection",
+      documents: ["BPL Card", "Aadhaar Card"]
+    },
+    
+    {
+      id: 24,
+      title: "Stand Up India",
+      category: "employment",
+      description: "Loans for SC/ST and women entrepreneurs.",
+      state: "ALL",
+      beneficiaries: ["general", "women"],
+      status: "active",
+      website: "https://standupmitra.in",
+      eligibility: "SC/ST and women entrepreneurs",
+      benefits: "Bank loans between ₹10 lakh and ₹1 crore",
+      documents: ["Business Plan", "Caste Certificate"]
+    }];
+    window.onload = function() {
+            const username = localStorage.getItem('username');
+            if (username) {
+                document.getElementById('usernameDisplayText').textContent = `Welcome, ${username}!`;
+            } else {
+                // If no username is found, redirect to the login page
+                window.location.href = '/login.html'; // Redirect to login if not logged in
+            }
+        };
+    const schemesContainer = document.getElementById("schemesContainer");
+    const categoryFilter = document.getElementById("categoryFilter");
+    const beneficiaryFilter = document.getElementById("beneficiaryFilter");
+    const searchBox = document.getElementById("searchBox");
+
+    // Function to render schemes
+    function renderSchemes(filteredSchemes) {
+      schemesContainer.innerHTML = "";
+      filteredSchemes.forEach(scheme => {
+        const schemeCard = document.createElement("div");
+        schemeCard.className = "col-md-4 scheme-card";
+        schemeCard.innerHTML = `
+          <div class="card h-100">
+            <div class="card-body">
+               <h5 class="card-title">${scheme.title}</h5> 
+              <p class="card-text">${scheme.description}</p>
+              <a href="${scheme.website}" target="_blank" class="btn btn-primary">Learn More</a>
+            </div>
+          </div>
+        `;
+        schemesContainer.appendChild(schemeCard);
+      });
+    }
+
+    // Initial render
+    renderSchemes(schemes);
+
+    // Filtering logic
+    function filterSchemes() {
+      const category = categoryFilter.value;
+      const beneficiary = beneficiaryFilter.value.toLowerCase();
+      const searchTerm = searchBox.value.toLowerCase();
+
+      const filteredSchemes = schemes.filter(scheme => {
+        const matchesCategory = category === "all" || scheme.category === category;
+        const matchesBeneficiary = beneficiary === "all" || scheme.beneficiaries.includes(beneficiary);
+        const matchesSearch =
+          scheme.title.toLowerCase().includes(searchTerm) ||
+          scheme.description.toLowerCase().includes(searchTerm);
+
+        return matchesCategory && matchesBeneficiary && matchesSearch;
+      });
+
+      renderSchemes(filteredSchemes);
+    }
+    function deleteAccount() {
+    // Fetch the username from localStorage, assuming it's saved during login
+    const username = localStorage.getItem('username');
+    
+    if (!username) {
+        alert('Username is not available.');
+        return;
+    }
+
+    fetch('/delete-account', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Your account has been deleted.');
+            logoutUser(); // Log the user out after account deletion
+            localStorage.removeItem('username'); // Remove the username from localStorage
+            window.location.href = '/landingpage.html'; // Redirect to landing page after account deletion
+        } else {
+            alert(data.message || 'Error deleting account.');
+        }
+    })
+    .catch(error => {
+        console.error('Error deleting account:', error);
+        alert('An error occurred while deleting the account.');
+    });
+}
+
+    // Event listeners
+    categoryFilter.addEventListener("change", filterSchemes);
+    beneficiaryFilter.addEventListener("change", filterSchemes);
+    searchBox.addEventListener("input", filterSchemes);
+  </script>
+</body>
+
+</html>
